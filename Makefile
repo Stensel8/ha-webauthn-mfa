@@ -50,8 +50,7 @@ help:
 .PHONY: install
 install:
 	@echo "--- Installing Python dependencies"
-	pip install -r requirements_test.txt
-	pip install ruff
+	pip install -r requirements_test.txt -r requirements_lint.txt
 	@echo "Done."
 
 # ── Lint ─────────────────────────────────────────────────────
