@@ -1,7 +1,7 @@
 services:
   homeassistant:
     container_name: webauthn_mfa_ha_dev
-    image: ghcr.io/home-assistant/home-assistant:stable
+    image: ghcr.io/home-assistant/home-assistant:stable@sha256:14931c6b13756317849f46da1d01b45937a1150db66c081cfe529d48215943fe
     volumes:
       - ./dev/ha-config:/config
       - ./custom_components/webauthn_mfa:/config/custom_components/webauthn_mfa
@@ -17,7 +17,7 @@ services:
       retries: 5
   
   caddy:
-    image: caddy:latest
+    image: caddy:2@sha256:df7f1c2fb114453b951de51a98efc010db1655a92c2e86be6706714e2417a78d
     container_name: caddy_proxy
     ports:
       - "443:443"
@@ -28,12 +28,12 @@ services:
 
   test:
     container_name: webauthn_mfa_test
-    image: python:3.12-slim
+    image: python:3.14-slim@sha256:656d12e70054d5fda18a045e2494c96701e9792dd1445f95b3d038df954f57e9
     working_dir: /app
     volumes:
       - .:/app
     command: >
-      bash -c "pip install -r requirements_test.txt ruff --quiet &&
+      bash -c "pip install -r requirements_test.txt -r requirements_lint.txt --quiet &&
                pytest tests/ -v --tb=short"
     profiles:
       - test
